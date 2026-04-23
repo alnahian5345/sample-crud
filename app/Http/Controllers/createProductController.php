@@ -19,6 +19,12 @@ class createProductController extends Controller
 
         return redirect()->back()->with('success', 'Product added successfully!');
     }
+
+    public function delete($id){
+        $product=Product::findOrfail($id);
+        $product->delete();
+        return redirect()->back()->with('success', 'Product Deleted successfully!');
+    }
 }
 
 

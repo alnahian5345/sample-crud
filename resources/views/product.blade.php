@@ -112,12 +112,23 @@
                 </a>
 
                 <!-- ❌ Delete Button -->
-                <form action="" method="POST" style="display:inline;">
+                <form action="{{Route('product.delete',$product->id)}}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
                     <button type="submit" class="border-0 bg-transparent text-danger"
                             onclick="return confirm('Are you sure?')">
                         <i class="bi bi-x-lg"></i>
                     </button>
                 </form>
+{{--                <form action="{{ route('product.delete', $product->id) }}" method="POST" style="display:inline;">--}}
+{{--                    @csrf--}}
+{{--                    @method('DELETE')--}}
+
+{{--                    <button type="submit" class="border-0 bg-transparent text-danger"--}}
+{{--                            onclick="return confirm('Are you sure?')">--}}
+{{--                        <i class="bi bi-x-lg"></i>--}}
+{{--                    </button>--}}
+{{--                </form>--}}
 
             </td>
         </tr>
