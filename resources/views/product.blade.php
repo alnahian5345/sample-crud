@@ -56,7 +56,7 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-4">
-                                <label class="form-label fw-semibold text-danger">Cost Price</label>
+                                <label class="form-label fw-semibold text-danger">Purchase Price</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-tag-fill"></i></span>
                                     <input type="number" step="0.01" name="cost_price" class="form-control @error('cost_price') is-invalid @enderror" placeholder="0.00" value="{{ old('cost_price') }}">
@@ -85,7 +85,7 @@
 </div>
 <table class="table table-bordered">
     <thead>
-    <tr>
+    <tr class="  text-center ">
         <th>SL</th>
         <th>Name</th>
         <th>SKU</th>
@@ -107,7 +107,17 @@
             <td class="text-center">
 
                 <!-- ✏️ Edit Button -->
-                <a href="" class="text-primary me-2">
+                <a href="javascript:void(0)"
+                   class="text-primary editBtn"
+                   data-id="{{ $product->id }}"
+                   data-name="{{ $product->name }}"
+                   data-sku="{{ $product->sku }}"
+                   data-stock="{{ $product->current_stock }}"
+                   data-cost="{{ $product->cost_price }}"
+                   data-price="{{ $product->price }}"
+                   data-bs-toggle="modal"
+                   data-bs-target="#editModal">
+
                     <i class="bi bi-pencil-square"></i>
                 </a>
 
@@ -120,23 +130,69 @@
                         <i class="bi bi-x-lg"></i>
                     </button>
                 </form>
-{{--                <form action="{{ route('product.delete', $product->id) }}" method="POST" style="display:inline;">--}}
-{{--                    @csrf--}}
-{{--                    @method('DELETE')--}}
-
-{{--                    <button type="submit" class="border-0 bg-transparent text-danger"--}}
-{{--                            onclick="return confirm('Are you sure?')">--}}
-{{--                        <i class="bi bi-x-lg"></i>--}}
-{{--                    </button>--}}
-{{--                </form>--}}
 
             </td>
         </tr>
     @endforeach
     </tbody>
 </table>
+
+{{--Eeeeediiit ------------------------------------------}}
+
+<div class="modal fade" id="editModal">
+    <div class="modal-dialog">
+
+        <form action="{{ route('product.update', $product->id) }}" method="POST" id="editForm">
+            @csrf
+            @method('PUT')
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5>Edit Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <input type="text" name="name" id="name" class="form-control mb-2">
+                    <input type="text" name="sku" id="sku" class="form-control mb-2">
+                    <input type="number" name="current_stock" id="stock" class="form-control mb-2">
+                    <input type="number" name="cost_price" id="cost" class="form-control mb-2">
+                    <input type="number" name="price" id="price" class="form-control mb-2">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Update</button>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+{{--Eeeeediiit ------------------------------------------}}
 <script>
-    document.getElementById('product_create_from').reset();
+    // document.getElementById('product_create_from').reset();
+
+
+    document.querySelectorAll('.editBtn').forEach(btn => {
+        btn.addEventListener('click', function () {
+
+            let id = this.getAttribute('data-id');
+
+            document.getElementById('name').value = this.getAttribute('data-name');
+            document.getElementById('sku').value = this.getAttribute('data-sku');
+            document.getElementById('stock').value = this.getAttribute('data-stock');
+            document.getElementById('cost').value = this.getAttribute('data-cost');
+            document.getElementById('price').value = this.getAttribute('data-price');
+
+            // form action set (important)
+            document.getElementById('editForm').action = "/product/update/" + id;
+        });
+    });
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

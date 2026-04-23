@@ -21,10 +21,26 @@ class createProductController extends Controller
     }
 
     public function delete($id){
-        $product=Product::findOrfail($id);
+        $product=Product::find($id);
         $product->delete();
         return redirect()->back()->with('success', 'Product Deleted successfully!');
     }
+
+
+    public function update(Request $request,$id){
+        $product=Product::find($id);
+
+        $product->update([
+            'name'          => $request->name,
+            'sku'           => $request->sku,
+            'current_stock' => $request->current_stock,
+            'price'         => $request->price,
+            'cost_price'    => $request->cost_price,
+        ]);
+
+        return redirect('/')->with('success', 'Product updated successfully!');
+    }
+
 }
 
 

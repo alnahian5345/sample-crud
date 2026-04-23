@@ -12,5 +12,7 @@ Route::get('/',function (){
 
 Route::post('/product',[createProductController::class,'createProduct'])->name('createProduct.create');
 
+Route::put('/product/update/{id}',[createProductController::class,'update'])->name('product.update');
+
 Route::delete('/product/delete/{id}',[createProductController::class,'delete'])->name('product.delete');
-//Route::delete('/product/delete/{id}', [createProductController::class, 'delete'])->name('product.delete');
+
