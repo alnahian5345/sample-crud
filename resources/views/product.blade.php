@@ -6,6 +6,7 @@
     <title>Add New Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body { background-color: #f8f9fa; }
         .card { border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
@@ -31,7 +32,7 @@
                 <div class="card-body">
                     <h3 class="card-title fw-bold text-center mb-4">Inventory Entry</h3>
 
-                    <form action="/products" method="POST">
+                    <form id="product_create_from" action="{{Route('createProduct.create')}}" method="POST">
                         @csrf
 
                         <div class="mb-3">
@@ -82,7 +83,50 @@
         </div>
     </div>
 </div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>SL</th>
+        <th>Name</th>
+        <th>SKU</th>
+        <th>Stock</th>
+        <th>Cost Price</th>
+        <th>Selling Price</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($products as $product)
+        <tr>
+            <td>1</td>
+            <td>{{ $product->name }}</td>
+            <td>{{ $product->sku }}</td>
+            <td>{{ $product->current_stock }}</td>
+            <td>{{ $product->cost_price }}</td>
+            <td>{{ $product->price }}</td>
+            <td class="text-center">
 
+                <!-- ✏️ Edit Button -->
+                <a href="" class="text-primary me-2">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+
+                <!-- ❌ Delete Button -->
+                <form action="" method="POST" style="display:inline;">
+                    <button type="submit" class="border-0 bg-transparent text-danger"
+                            onclick="return confirm('Are you sure?')">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </form>
+
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+<script>
+    document.getElementById('product_create_from').reset();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
