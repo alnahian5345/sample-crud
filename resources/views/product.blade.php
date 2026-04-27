@@ -96,9 +96,9 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($products as $product)
+    @foreach($products as $key => $product)
         <tr>
-            <td>1</td>
+            <td>{{$key+1}}</td>
             <td>{{ $product->name }}</td>
             <td>{{ $product->sku }}</td>
             <td>{{ $product->current_stock }}</td>
@@ -142,7 +142,7 @@
 <div class="modal fade" id="editModal">
     <div class="modal-dialog">
 
-        <form action="{{ route('product.update', $product->id) }}" method="POST" id="editForm">
+        <form action="" method="POST" id="editForm">
             @csrf
             @method('PUT')
 

@@ -20,6 +20,13 @@ class createProductController extends Controller
         return redirect()->back()->with('success', 'Product added successfully!');
     }
 
+//    public function createSupplier(){
+//
+//    }
+//
+
+
+
     public function delete($id){
         $product=Product::find($id);
         $product->delete();
@@ -28,7 +35,7 @@ class createProductController extends Controller
 
 
     public function update(Request $request,$id){
-        $product=Product::find($id);
+        $product=Product::findOrfail($id);
 
         $product->update([
             'name'          => $request->name,
